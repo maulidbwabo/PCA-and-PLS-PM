@@ -37,11 +37,7 @@ Govpls$path_coefs
 #Inner model
 Govpls$inner_model
 Govpls$path_coefs
-coefplot(Govpls==path_coefs)
-coefficients(Govpls)
-require(coefplot)
-coefplot(Govpls)
-coefplot(Governance1)
+
 # PCA
 getNormFactor = function(collection) {
   med   = mean(collection);
@@ -53,6 +49,7 @@ getNormFactor = function(collection) {
 # Correlation
 summary(Governance1);
 M = cor(GovernaceP)
+M
 ncol(Governance1)
 nrow(Governance1)
 # Coerce to matrix, remove the first column which has characters
@@ -76,6 +73,20 @@ summary(GovernancePca)
 library(devtools)
 install.packages("usethis")
 #VQV issue
+install.packages("ggbiplot")
+library(ggbiplot)
+install.packages("remotes")
+remotes::install_github("vqv/ggbiplot")
+library(ggbiplot)
+require(ggplot2)
+require(plyr)
+require(scales)
+require(grid)
+ggbiplot(GovernancePca)
+ggbiplot(GovernancePca, labels=rownames(GovernancePca))
+Governace.group = c(rep("Transparency", 269), rep("Accountability",269), rep("Legal", 269),rep("Value",269))
+ggbiplot(GovernancePca,ellipse=TRUE,  labels=rownames(GovernaceP), groups=Governace.group)
+ggbiplot(mtcars.pca)
 install.packages("rlang")
 library(devtools)
 install.packages("usethis")
