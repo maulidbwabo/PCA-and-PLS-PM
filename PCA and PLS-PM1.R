@@ -1,12 +1,11 @@
 #Procurement Goverance and  Value for Money
 #Author Maulid Bwabo
 #PhD Candidate at Jiangsu University
-#Management Schoool
+#Management School
 #PRINCIPAL COMPONENTS ANALYSIS AND PLS-PM
 library("plspm")
 library("plsdepot")
 library("corrplot")
-library("e1071")
 #Working Directory
 setwd("C:/Users/bwabo/OneDrive/Desktop/Review Paper T")
 #Import Data
@@ -74,6 +73,17 @@ plot(GovernancePca, type = "l")
 GovernancePca
 str(GovernancePca)
 summary(GovernancePca)
+library(devtools)
+install.packages("usethis")
+#VQV issue
+install.packages("rlang")
+library(devtools)
+install.packages("usethis")
+install_github("vqv/ggbiplot", force = TRUE)
+install.packages("remotes")
+remotes::install_github("vqv/ggbiplot")
+install_github("vqv/ggbiplot")
+install.packages("ggbiplot")
 library(devtools)
 install_github("vqv/ggbiplot")
 #Install Library
