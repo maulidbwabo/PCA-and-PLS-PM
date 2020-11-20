@@ -94,6 +94,7 @@ ggbiplot(log.GovernanceP)
 ggbiplot(log.GovernanceP, labels=rownames(log.GovernanceP))
 predict(log.GovernanceP,
         newdata=tail(GovernaceP, 2))
+#Interpreting the Result
 group = ggbiplot(log.GovernanceP, obs.scale = 1, var.scale = 1,
                  groups = Governance.Gender, ellipse = TRUE,
                  circle = TRUE)
@@ -101,6 +102,23 @@ group = group + scale_color_discrete(name = '')
 group = group + theme(legend.direction = 'horizontal',
                       legend.position = 'top')
 print(group)
+ggbiplot(log.GovernanceP,ellipse=TRUE,choices=c(3,4), labels=rownames(GovernaceP), groups=Governance.Gender)
+ggbiplot(log.GovernanceP,ellipse=TRUE,choices=c(5,6), labels=rownames(GovernaceP), groups=Governance.Gender)
+ggbiplot(log.GovernanceP,ellipse=TRUE,choices=c(7,8), labels=rownames(GovernaceP), groups=Governance.Gender)
+ggbiplot(log.GovernanceP,ellipse=TRUE,choices=c(8,9), labels=rownames(GovernaceP), groups=Governance.Gender)
+#Graphical Parameter with ggbiplot
+ggbiplot(log.GovernanceP,ellipse=TRUE,circle=TRUE, labels=rownames(GovernaceP), groups=Governance.Gender)
+ggbiplot(log.GovernanceP,ellipse=TRUE,obs.scale = 1, var.scale = 1,  labels=rownames(GovernaceP), groups=Governance.Gender)
+#Removing the arrows from graphs
+ggbiplot(log.GovernanceP,ellipse=TRUE,obs.scale = 1, var.scale = 1,var.axes=FALSE,   labels=rownames(GovernaceP), groups=Governance.Gender)
+#Customized ggbiplot
+ggbiplot(log.GovernanceP,ellipse=TRUE,obs.scale = 1, var.scale = 1,  labels=rownames(GovernaceP), groups=Governance.Gender) +
+  scale_colour_manual(name="Origin", values= c("forest green", "red3", "dark blue"))+
+  ggtitle("PCA of Governance dataset")+
+  theme_minimal()+
+  theme(legend.position = "bottom")
+
+#Installing ggbiplot
 library(devtools)
 install.packages("usethis")
 install_github("vqv/ggbiplot", force = TRUE)
