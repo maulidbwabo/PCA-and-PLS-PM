@@ -194,7 +194,7 @@ plot(GovPls, what="weights")
 # Unidimensionallity
 tweetsPls$unidim
 
-#  Alphas must be higher than 0.7 to be acceotable (rule of thumb)
+#  Alphas must be higher than 0.7 (rule of thumb)
 GovPls$unidim[, 3, drop = FALSE]
 
 # Loadings and communalities
