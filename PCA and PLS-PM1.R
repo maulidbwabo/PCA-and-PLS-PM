@@ -215,25 +215,25 @@ tweetsPls$unidim
 #  Alphas must be higher than 0.7 (rule of thumb)
 GovPls$unidim[, 3, drop = FALSE]
 
-# Loadings and communalities
+# Loading and communalities
 # communality must be higher than 0.7 (comes form 0.7^2 = 50% of variance)
 GovPls$outer_model
 
-# Cross loadings
+# Cross loading
 # Does parameter is useful to describe blocks?
 GovPls$crossloadings
 # Explanation of the blocks
 GovPls$inner_model
 GovPls$inner_summary
 # Validation
-# Bootstraping: Add some noise to the original data to make sure that the model correctly
+# Bootstrapping: Add some noise to the original data to make sure that the model correctly
 # describes data.
 bootPls = plspm(GovernaceP,GovInner, GovOuter, GovModes, boot.val = TRUE, br = 100)
 plot(bootPls)
 bootPls$crossloadings
 plot(bootPls, what="loadings")
 plot(bootPls, what="weights")
-# Bootstraping results
+# Bootstrapping results
 bootPls$boot
 
 
