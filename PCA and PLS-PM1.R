@@ -48,28 +48,36 @@ getNormFactor = function(collection) {
 #
 # Correlation
 summary(Governance1);
+str(Governance1);
 M = cor(GovernaceP)
 M
 ncol(Governance1)
 nrow(Governance1)
+str(GovernaceP)
 # Coerce to matrix, remove the first column which has characters
-GovernaceP= subset(Governance1, select = - c(42, 43, 43))
+Governance1$Gender = as.factor(Governance1$Gender)
+GovernaceP= subset(Governance1, select = - c(43, 43))
+log.GovernanceP = log(GovernaceP[, 1:9])
+log.GovernanceP = log(GovernaceP[, 10:17])
+log.GovernanceP = log(GovernaceP[, 27:34])
+log.GovernanceP = log(GovernaceP[, 35:41])
+log.GovernanceP = log(GovernaceP[, 35:41])
+Governance.Gender = GovernaceP[, 42]
 #CPA analysis
-help(prcomp)
-GovernancePca = prcomp(GovernaceP, center = TRUE, scale. = TRUE)
-GovernancePca
-GovernancePca$rotation
-GovernancePca$x
-GovernancePca$sdev
-GovernancePca$scale
-GovernanceRotationAbs = abs(GovernancePca$rotation)
+log.GovernanceP = prcomp(GovernaceP, center = TRUE, scale. = TRUE)
+log.GovernanceP
+log.GovernanceP$rotation
+log.GovernanceP$x
+log.GovernanceP$sdev
+log.GovernanceP$scale
+GovernanceRotationAbs = abs(log.GovernanceP$rotation)
 GovernanceRotationAbs
 GovernanceRotationAbs
-plot(GovernancePca, type = "l")
+plot(log.GovernanceP, type = "l")
 
 GovernancePca
-str(GovernancePca)
-summary(GovernancePca)
+str(log.GovernanceP)
+summary(log.GovernanceP)
 library(devtools)
 install.packages("usethis")
 #VQV issue
@@ -82,11 +90,17 @@ require(ggplot2)
 require(plyr)
 require(scales)
 require(grid)
-ggbiplot(GovernancePca)
-ggbiplot(GovernancePca, labels=rownames(GovernancePca))
-Governace.group = c(GovernaceP,Transparency=c[1:9],Accountability=c[10:17],Legal=c[27:34],Value=c[35:41])
-ggbiplot(GovernancePca,ellipse=TRUE,  labels=rownames(GovernaceP), groups=Governace.group)
-ggbiplot(mtcars.pca)
+ggbiplot(log.GovernanceP)
+ggbiplot(log.GovernanceP, labels=rownames(log.GovernanceP))
+predict(log.GovernanceP,
+        newdata=tail(GovernaceP, 2))
+group = ggbiplot(log.GovernanceP, obs.scale = 1, var.scale = 1,
+                 groups = Governance.Gender, ellipse = TRUE,
+                 circle = TRUE)
+group = group + scale_color_discrete(name = '')
+group = group + theme(legend.direction = 'horizontal',
+                      legend.position = 'top')
+print(group)
 library(devtools)
 install.packages("usethis")
 install_github("vqv/ggbiplot", force = TRUE)
@@ -98,9 +112,9 @@ library(devtools)
 install_github("vqv/ggbiplot")
 #Install Library
 library(ggbiplot)
-ggbiplot(GovernancePca)
-names(GovernaceP)
-GovernaceP
+ggbiplot(log.GovernanceP)
+names(log.GovernanceP)
+log.GovernanceP
 
 #Getting Principle Components
 # 1: Transparency
@@ -124,7 +138,7 @@ GovernanceRotationAbs[order(-GovernanceRotationAbs[,"PC4"]),4]
 Value_cols = c(35, 36,37,38,39,40,41);
 plot(nipals(GovernaceP[,Value_cols]), main = "Value indicators (circle of correlations)", cex.main = 1)
 # principal components
-GovernaceP = princomp(GovernaceP);
+GovernaceP= princomp(GovernaceP);
 summary(GovernaceP, loadings=TRUE)
 
 # PCA of Influencer indicators with nipals
@@ -203,3 +217,5 @@ plot(bootPls, what="loadings")
 plot(bootPls, what="weights")
 # Bootstraping results
 bootPls$boot
+
+
