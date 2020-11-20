@@ -1,4 +1,4 @@
-#Procurement Goverance and  Value for Money
+#Procurement Governance and  Value for Money
 #Author Maulid Bwabo
 #PhD Candidate at Jiangsu University
 #Management School
@@ -28,7 +28,7 @@ innerplot(Gov_path)
 Gov_blocks =list(1:9, 10:17, 27:34, 35:41)
 # vector of reflective modes
 Gov_modes =rep("A",4)
-# apply plspm
+# Apply PLS-PM
 str(Governance)
 col(Governance)
 Govpls = plspm(Governance1, Gov_path, Gov_blocks, modes = Gov_modes, scheme="centroid", scaled=FALSE)
