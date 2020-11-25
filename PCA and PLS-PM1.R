@@ -6,12 +6,14 @@
 library("plspm")
 library("plsdepot")
 library("corrplot")
+help(nipals)
 #Working Directory
 setwd("C:/Users/bwabo/OneDrive/Desktop/Review Paper T")
 #Import Data
 Governance=read.table("C:/Users/bwabo/OneDrive/Desktop/Public Money/Governace 3.csv",header = T,sep = ",", stringsAsFactors = FALSE )
-Governance1= read.csv("C:/Users/bwabo/OneDrive/Desktop/Public Money/Governace 3.csv")
+Governance1= read.csv("C:/Users/bwabo/OneDrive/Desktop/Public Money/Governace3.csv")
 str(Governance1)
+head(Governance1)
 #path matrix
 Transparency =rep(0,4)
 Accountability=rep(0,4)
@@ -29,7 +31,7 @@ Gov_blocks =list(1:9, 10:17, 27:34, 35:41)
 # vector of reflective modes
 Gov_modes =rep("A",4)
 # Apply PLS-PM
-str(Governance)
+str(Governance1)
 col(Governance)
 Govpls = plspm(Governance1, Gov_path, Gov_blocks, modes = Gov_modes, scheme="centroid", scaled=FALSE)
 summary(Govpls)
@@ -56,7 +58,7 @@ nrow(Governance1)
 str(GovernaceP)
 # Coerce to matrix, remove the first column which has characters
 Governance1$Gender = as.factor(Governance1$Gender)
-GovernaceP= subset(Governance1, select = - c(43, 43))
+GovernaceP= subset(Governance1, select = - c(42, 43))
 log.GovernanceP = log(GovernaceP[, 1:9])
 log.GovernanceP = log(GovernaceP[, 10:17])
 log.GovernanceP = log(GovernaceP[, 27:34])
@@ -80,6 +82,7 @@ str(log.GovernanceP)
 summary(log.GovernanceP)
 library(devtools)
 install.packages("usethis")
+library(usethis)
 #VQV issue
 install.packages("ggbiplot")
 library(ggbiplot)
