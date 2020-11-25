@@ -238,5 +238,62 @@ plot(bootPls, what="loadings")
 plot(bootPls, what="weights")
 # Bootstrapping results
 bootPls$boot
+#Clustering
+head(Governance)
+GovernanceT=Governance[,which(names(Governance) != "Gender")]
+GovernaceT= subset(Governance, select = - c(42, 43))
+head(GovernaceT)
+GovernanceT=Governance[,which(names(Governance) != "Age")]
+#We set seed to generate the reproducible results
+set.seed(278613)
+GovernanceK=kmeans(x=GovernaceT,centers = 3)
+#Similarity measures
+GovernanceK
+plot(GovernanceK,data = GovernaceT)
+set.seed(278613)
+#Random starting Conditions
+GovernanceTZ=kmeans(GovernaceT, centers = 3,nstart = 25)
+GovernanceTZ$size
+#Hartigan Rule
+GovernanceB=FitKMeans(GovernaceT,max.clusters = 20,nstart = 25, seed = 278613)
+GovernanceB
+PlotHartigan(GovernanceB)
+#Gap Statistics
+require(cluster)
+theGov=clusGap(GovernaceT,FUNcluster = pam,K.max = 20)
+GovDF=as.data.frame(theGov$Tab)
+GovDF
+#LogW curves
+ggplot(GovDF,aes(x=1:nrow(GovDF)))+
+  geom_line(aes(y=logW), color="blue")+
+  geom_point(aes(y=logW), color="blue")+
+  geom_line(aes(y=E.logW), color="green")+
+  geom_point(aes(y=E.logW), color="green")+
+  labs(x="Number of Clusters", y="Gap")
+#Gap Curve
+ggplot(GovDF,aes(x=1:nrow(GovDF)))+
+  geom_line(aes(y=gap), color="red")+
+  geom_point(aes(y=gap), color="red")+
+  geom_errorbar(aes(ymin=gap-SE.sim, ymax=gap+SE.sim),color="red")+
+  labs(x="Number of Clusters", y="Gap")
+#Hierarchical Clustering
+GovH=hclust(d=dist(GovernaceT))
+plot(GovH)
+#Linkage Method
+Govh1=hclust(dist(GovernaceT),method = "single")
+Govh2=hclust(dist(GovernaceT),method = "complete")
+Govh3=hclust(dist(GovernaceT),method = "average")
+Govh4=hclust(dist(GovernaceT),method = "centroid")
+#
+plot(Govh1,labels = FALSE,main = "Single")
+plot(Govh2,labels = FALSE,main = "Complete")
+plot(Govh3,labels = FALSE,main = "average")
+plot(Govh3,labels = FALSE,main = "centroid")
+#Plot the tree
+plot(GovH)
+#Split into three clusters
+rect.hclust(GovH,k=3,border = "red")
+#Split into 13 clusters
+rect.hclust(GovH,k=13, border = "blue")
 
 
