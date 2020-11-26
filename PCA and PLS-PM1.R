@@ -14,6 +14,7 @@ Governance=read.table("C:/Users/bwabo/OneDrive/Desktop/Public Money/Governace 3.
 Governance1= read.csv("C:/Users/bwabo/OneDrive/Desktop/Public Money/Governace3.csv")
 str(Governance1)
 head(Governance1)
+head(Governance1)
 #path matrix
 Transparency =rep(0,4)
 Accountability=rep(0,4)
@@ -36,6 +37,14 @@ col(Governance)
 Govpls = plspm(Governance1, Gov_path, Gov_blocks, modes = Gov_modes, scheme="centroid", scaled=FALSE)
 summary(Govpls)
 Govpls$path_coefs
+# Bootstrapping: Add some noise to the original data to make sure that the model correctly
+# describes data.
+bootgov = plspm(Governance1, Gov_path, Gov_blocks, modes = Gov_modes, boot.val = TRUE, br = 5000)
+bootgov$boot
+plot(bootgov)
+bootgov$crossloadings
+plot(bootgov, what="loadings")
+plot(bootgov, what="weights")
 #Inner model
 Govpls$inner_model
 Govpls$path_coefs
@@ -76,7 +85,6 @@ GovernanceRotationAbs = abs(log.GovernanceP$rotation)
 GovernanceRotationAbs
 GovernanceRotationAbs
 plot(log.GovernanceP, type = "l")
-
 GovernancePca
 str(log.GovernanceP)
 summary(log.GovernanceP)
@@ -246,6 +254,7 @@ head(GovernaceT)
 GovernanceT=Governance[,which(names(Governance) != "Age")]
 #We set seed to generate the reproducible results
 set.seed(278613)
+GovernanceK=kmeans(x=GovernaceT,centers = 3)
 GovernanceK=kmeans(x=GovernaceT,centers = 3)
 #Similarity measures
 GovernanceK
