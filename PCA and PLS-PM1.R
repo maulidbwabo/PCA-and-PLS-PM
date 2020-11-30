@@ -252,24 +252,27 @@ GovernanceT=Governance[,which(names(Governance) != "Gender")]
 GovernaceT= subset(Governance, select = - c(42, 43))
 head(GovernaceT)
 GovernanceT=Governance[,which(names(Governance) != "Age")]
-#We set seed to generate the reproducible results
 set.seed(278613)
 GovernanceK=kmeans(x=GovernaceT,centers = 3)
-GovernanceK=kmeans(x=GovernaceT,centers = 3)
-#Similarity measures
 GovernanceK
 plot(GovernanceK,data = GovernaceT)
 set.seed(278613)
-#Random starting Conditions
-GovernanceTZ=kmeans(GovernaceT, centers = 3,nstart = 25)
+GovernanceTZ=kmeans(GovernaceT [,1:17], centers = 3,nstart = 25)
+GovernanceTZ
 GovernanceTZ$size
-#Hartigan Rule
+GovernanceTZ$cluster
+GovernanceTZ$withinss
+GovernanceTZ$totss
+GovernanceTZ$tot.withinss
+GovernanceTZ$betweenss
+GovernanceTZ$iter
 GovernanceB=FitKMeans(GovernaceT,max.clusters = 20,nstart = 25, seed = 278613)
-GovernanceB
+GovernanceB$Hartigan
+GovernanceB$Clusters
 PlotHartigan(GovernanceB)
 #Gap Statistics
 require(cluster)
-theGov=clusGap(GovernaceT,FUNcluster = pam,K.max = 20)
+theGov=clusGap(GovernaceT,FUNcluster = pam,K.max = 50)
 GovDF=as.data.frame(theGov$Tab)
 GovDF
 #LogW curves
@@ -297,7 +300,7 @@ Govh4=hclust(dist(GovernaceT),method = "centroid")
 plot(Govh1,labels = FALSE,main = "Single")
 plot(Govh2,labels = FALSE,main = "Complete")
 plot(Govh3,labels = FALSE,main = "average")
-plot(Govh3,labels = FALSE,main = "centroid")
+plot(Govh4,labels = FALSE,main = "centroid")
 #Plot the tree
 plot(GovH)
 #Split into three clusters
