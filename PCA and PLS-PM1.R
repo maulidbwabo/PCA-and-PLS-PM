@@ -307,5 +307,24 @@ plot(GovH)
 rect.hclust(GovH,k=3,border = "red")
 #Split into 13 clusters
 rect.hclust(GovH,k=13, border = "blue")
-
-
+#Conditional Process Analysis
+# select data for Experience  (HIGH|LOW)
+High = Governance1[Governance1$Experience =="HIGH",]
+Low = Governance1[Governance1$Experience=="LOW",]
+# High experience plspm
+High_pls =plspm(High,Gov_path, Gov_blocks, modes = Gov_modes, scheme="centroid", scaled=FALSE)
+summary(High_pls)
+High_val=plspm(High,Gov_path, Gov_blocks, modes = Gov_modes, boot.val=TRUE,br=5000)
+High_val
+summary(High_val)
+#Low experience plspm
+Low_pls =plspm(Low,Gov_path, Gov_blocks, modes = Gov_modes, scheme="centroid", scaled=FALSE)
+summary(Low_pls)
+Low_val=plspm(Low,Gov_path, Gov_blocks, modes = Gov_modes, boot.val=TRUE,br=5000)
+Low_val
+summary(Low_val)
+#Permutations
+str(Governance1)
+Governance1$Experience = as.factor(Governance1$Experience)
+Gov_pls_perm =plspm.groups(Govpls, Governance1$Experience, method ="permutation")
+Govpls_boot =plspm.groups(Govpls, Governance1$Experience, method ="bootstrap")
