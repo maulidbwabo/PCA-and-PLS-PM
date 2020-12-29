@@ -328,3 +328,6 @@ str(Governance1)
 Governance1$Experience = as.factor(Governance1$Experience)
 Gov_pls_perm =plspm.groups(Govpls, Governance1$Experience, method ="permutation")
 Govpls_boot =plspm.groups(Govpls, Governance1$Experience, method ="bootstrap")
+#Process package for Moderation and Mediation
+if(!require(devtools)) install.packages("devtools")
+devtools::install_github("cardiomoon/processR")
