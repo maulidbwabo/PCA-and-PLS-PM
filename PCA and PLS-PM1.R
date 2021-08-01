@@ -3,6 +3,8 @@
 #PhD Candidate at Jiangsu University
 #Management School
 #PRINCIPAL COMPONENTS ANALYSIS AND PLS-PM
+install.packages("plspm")
+devtools::install_github("gastonstat/plspm")
 library("plspm")
 library("plsdepot")
 library("corrplot")
@@ -10,7 +12,37 @@ help(nipals)
 #Working Directory
 setwd("C:/Users/bwabo/OneDrive/Desktop/Review Paper T")
 #Import Data
-Governance=read.table("C:/Users/bwabo/OneDrive/Desktop/Public Money/Governace 3.csv",header = T,sep = ",", stringsAsFactors = FALSE )
+library(readr)
+Governanace =read.table("C:/Users/bwabo/OneDrive/Desktop/Paper 4/Governanace.csv",header = T,sep = ",", stringsAsFactors = FALSE )
+View(Governanace)
+summary(Governanace)
+Governanace$Experience = as.factor(Governanace$Experience)
+str(Governanace)
+#Conditional Process Analysis
+# select data for Experience  (HIGH|LOW)
+High = Governanace[Governanace$Experience =="High",]
+Low = Governanace[Governanace$Experience=="Low",]
+# High experience plspm
+High_pls =plspm(High,Gov_path, Gov_blocks, modes = Gov_modes, scheme="centroid", scaled=FALSE)
+summary(High_pls)
+High_val=plspm(High,Gov_path, Gov_blocks, modes = Gov_modes, boot.val=TRUE,br=5000)
+High_val
+summary(High_val)
+#Low experience plspm
+Low_pls =plspm(Low,Gov_path, Gov_blocks, modes = Gov_modes, scheme="centroid", scaled=FALSE)
+summary(Low_pls)
+Low_val=plspm(Low,Gov_path, Gov_blocks, modes = Gov_modes, boot.val=TRUE,br=5000)
+Low_val
+summary(Low_val)
+#Permutations
+str(Governance1)
+Governance1$Experience = as.factor(Governance1$Experience)
+Gov_pls_perm =plspm.groups(Govpls, Governanace$Experience, method ="permutation")
+Gov_pls_perm
+Govpls_boot =plspm.groups(Govpls, Governanace$Experience, method ="bootstrap")
+Govpls_boot
+summary(Governanace)
+Governance=("C:/Users/bwabo/OneDrive/Desktop/Public Money/Governace 3.csv",header = T,sep = ",", stringsAsFactors = FALSE )
 Governance1= read.csv("C:/Users/bwabo/OneDrive/Desktop/Public Money/Governace3.csv")
 str(Governance1)
 head(Governance1)
