@@ -40,9 +40,8 @@ Governance1$Experience = as.factor(Governance1$Experience)
 Gov_pls_perm =plspm.groups(Govpls, Governanace$Experience, method ="permutation")
 Gov_pls_perm
 Govpls_boot =plspm.groups(Govpls, Governanace$Experience, method ="bootstrap")
-Govpls_boot
+Govpls$inner_model
 summary(Governanace)
-Governance=("C:/Users/bwabo/OneDrive/Desktop/Public Money/Governace 3.csv",header = T,sep = ",", stringsAsFactors = FALSE )
 Governance1= read.csv("C:/Users/bwabo/OneDrive/Desktop/Public Money/Governace3.csv")
 str(Governance1)
 head(Governance1)
