@@ -28,12 +28,15 @@ summary(High_pls)
 High_val=plspm(High,Gov_path, Gov_blocks, modes = Gov_modes, boot.val=TRUE,br=5000)
 High_val
 summary(High_val)
+# plot path coefficients
+plot(High_pls)
 #Low experience plspm
 Low_pls =plspm(Low,Gov_path, Gov_blocks, modes = Gov_modes, scheme="centroid", scaled=FALSE)
 summary(Low_pls)
 Low_val=plspm(Low,Gov_path, Gov_blocks, modes = Gov_modes, boot.val=TRUE,br=5000)
 Low_val
 summary(Low_val)
+plot(Low_pls)
 #Permutations
 str(Governance1)
 Governance1$Experience = as.factor(Governance1$Experience)
