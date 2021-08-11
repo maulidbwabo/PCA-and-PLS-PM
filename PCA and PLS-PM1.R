@@ -17,7 +17,62 @@ Governanace =read.table("C:/Users/bwabo/OneDrive/Desktop/Paper 4/Governanace.csv
 View(Governanace)
 summary(Governanace)
 Governanace$Experience = as.factor(Governanace$Experience)
+Governanace$Age = as.factor(Governanace$Age)
+Governanace$Gender = as.factor(Governanace$Gender)
+mean=mean(Governanace$T1)
+mean(Governanace$Age)
+summary(Governanace$Gender)
 str(Governanace)
+head(Governanace)
+#Descriptive Analysis
+install.packages("reshape")
+install.packages("pastecs")
+library(reshape)
+library(pastecs)
+stat.desc(Governanace)
+summfn = function(x)c(n=sum(!is.na(x)),mean=mean(x),sd=sd(x))
+x= apply(Governanace,2,summfn)
+t(x)
+summary(Governanace$Experience)
+summary(Governanace$Age)
+summary(Governanace$Gender)
+Governanace$Ex =ifelse(Governanace$Experience.Length < median(Governanace$Experience.Length),
+                   "High", "Low"
+)
+#Round one
+table(Governanace$Experience, Governanace$Age)
+xtabs(~Governanace$Experience + Governanace$Age)
+prop.table(table(Governanace$Experience,Governanace$Age))
+#Gender
+#Round two
+table(Governanace$Experience, Governanace$Gender)
+xtabs(~Governanace$Experience + Governanace$Gender)
+prop.table(table(Governanace$Experience,Governanace$Gender))
+round(prop.table(table(Governanace$Experience,Governanace$Gender), 1), 2)
+#Round three
+table(Governanace$Gender, Governanace$Experience)
+xtabs(~Governanace$Gender + Governanace$Experience)
+prop.table(table(Governanace$Gender,Governanace$Experience))
+round(prop.table(table(Governanace$Gender,Governanace$Experience), 1), 2)
+#Round two
+table(Governanace$Age, Governanace$Experience)
+xtabs(~Governanace$Age + Governanace$Experience)
+prop.table(table(Governanace$Age, Governanace$Experience))
+#Percentage by row
+round(prop.table(table(Governanace$Experience,Governanace$Age), 1), 2)
+round(prop.table(table(Governanace$Age,Governanace$Experience), 1), 2)
+#summary tool package
+install.packages("installr")
+library(installr)
+updateR()
+install.packages("gmum.r", type="source")
+install.packages("summarytools")
+install.packages("pander")
+install.packages("rapportools")
+library(summarytools)
+str(Governanace)
+sstate = scale(Governanace,center=apply(Governanace,2,median),
+                scale=apply(Governanace,2,mad))
 #Conditional Process Analysis
 # select data for Experience  (HIGH|LOW)
 High = Governanace[Governanace$Experience =="High",]
@@ -36,6 +91,7 @@ summary(Low_pls)
 Low_val=plspm(Low,Gov_path, Gov_blocks, modes = Gov_modes, boot.val=TRUE,br=5000)
 Low_val
 summary(Low_val)
+#Plot path coefficients
 plot(Low_pls)
 #Permutations
 str(Governance1)
