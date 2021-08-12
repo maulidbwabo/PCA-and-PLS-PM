@@ -66,10 +66,67 @@ install.packages("installr")
 library(installr)
 updateR()
 install.packages("gmum.r", type="source")
+require(summarytools)
 install.packages("summarytools")
+library(summarytools)
+library(magick)
+library(Rcpp)
+#Frequency analysis
+#Removing the missing data
+freq(Governanace$Gender,
+     report.nas = FALSE # remove NA information
+)
+freq(Governanace$Age,
+     report.nas = FALSE # remove NA information
+)
+freq(Governanace$Experience,
+     report.nas = FALSE # remove NA information
+)
+#Chi-square test for each group
+ctable(
+  x = Governanace$Experience,
+  y = Governanace$Age,
+  chisq = TRUE, # display results of Chi-square test of independence
+  headings = FALSE # remove headings
+)
+ctable(
+  x = Governanace$Gender,
+  y = Governanace$Age,
+  chisq = TRUE, # display results of Chi-square test of independence
+  headings = FALSE # remove headings
+)
+#Continue
+descr(Governanace,
+      headings = FALSE, # remove headings
+      stats = "common" # most common descriptive statistics
+)
+#
+stby(
+  data = Governanace,
+  INDICES = Governanace$Experience, # by Species
+  FUN = descr, # descriptive statistics
+  stats = "common" # most common descr. stats
+)
+#
+stby(
+  data = Governanace,
+  INDICES = Governanace$Age, # by Species
+  FUN = descr, # descriptive statistics
+  stats = "common" # most common descr. stats
+)
+#
+stby(
+  data = Governanace,
+  INDICES = Governanace$Gender, # by Species
+  FUN = descr, # descriptive statistics
+  stats = "common" # most common descr. stats
+)
+#
+dfSummary(Governanace)
 install.packages("pander")
 install.packages("rapportools")
 library(summarytools)
+library(Rcpp)
 str(Governanace)
 sstate = scale(Governanace,center=apply(Governanace,2,median),
                 scale=apply(Governanace,2,mad))
