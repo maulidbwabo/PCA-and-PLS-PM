@@ -422,7 +422,7 @@ require(cluster)
 theGov=clusGap(GovernaceT,FUNcluster = pam,K.max = 50)
 GovDF=as.data.frame(theGov$Tab)
 GovDF
-#LogW curves
+#Log W curves
 ggplot(GovDF,aes(x=1:nrow(GovDF)))+
   geom_line(aes(y=logW), color="blue")+
   geom_point(aes(y=logW), color="blue")+
