@@ -151,13 +151,14 @@ summary(Low_val)
 #Plot path coefficients
 plot(Low_pls)
 #Permutations
-str(Governance1)
-Governance1$Experience = as.factor(Governance1$Experience)
+Governance1$Experience = as.factor(Governanace$Experience)
 Gov_pls_perm =plspm.groups(Govpls, Governanace$Experience, method ="permutation")
 Gov_pls_perm
+#bootstrap t-test
 Govpls_boot =plspm.groups(Govpls, Governanace$Experience, method ="bootstrap")
+Govpls_boot
 Govpls$inner_model
-summary(Governanace)
+#Next analysis phase (PCA)
 Governance1= read.csv("C:/Users/bwabo/OneDrive/Desktop/Public Money/Governace3.csv")
 str(Governance1)
 head(Governance1)
@@ -187,7 +188,11 @@ Govpls$path_coefs
 # Bootstrapping: Add some noise to the original data to make sure that the model correctly
 # describes data.
 bootgov = plspm(Governance1, Gov_path, Gov_blocks, modes = Gov_modes, boot.val = TRUE, br = 5000)
-bootgov$boot
+bootgov$boot$paths
+bootgov$boot$total.efs
+bootgov$boot$rsq
+bootgov$boot$loadings
+
 plot(bootgov)
 bootgov$crossloadings
 plot(bootgov, what="loadings")
@@ -478,3 +483,37 @@ Govpls_boot =plspm.groups(Govpls, Governance1$Experience, method ="bootstrap")
 #Process package for Moderation and Mediation
 if(!require(devtools)) install.packages("devtools")
 devtools::install_github("cardiomoon/processR")
+#Segmentation tree in PLS-PM
+#example 2
+Governanace =read.table("C:/Users/bwabo/OneDrive/Desktop/Paper 4/Governanace.csv",header = T,sep = ",", stringsAsFactors = FALSE )
+View(Governanace)
+summary(Governanace)
+Governanace$Experience = as.factor(Governanace$Experience)
+Governanace$Age = as.factor(Governanace$Age)
+Governanace$Gender = as.factor(Governanace$Gender)
+# select manifest variables
+data.gov=Governanace[,1:41]
+#define the inner model matrix
+Transparency =rep(0,4)
+Accountability=rep(0,4)
+Legal =c(1,1,0,0)
+Value =c(1,1,1,0)
+#bind the matrix
+Gov_path =rbind(Transparency,Accountability,Legal,Value)
+# list of blocks (outer model)
+Gov_blocks =list(1:9, 10:17, 27:34, 35:41)
+# vector of reflective modes
+Gov_modes =rep("A",4)
+#re-ordering the segmentation into true scale
+seg.gov= Governanace[,42:44]
+seg.gov$Experience = factor(seg.gov$Experience, ordered=TRUE)
+seg.gov$Age=factor(seg.gov$Age,ordered = TRUE)
+seg.gov$Gender=factor(seg.gov$Gender,ordered = TRUE)
+# Pathmox Analysis
+gov.pathmox=pls.pathmox(data.gov, Gov_path, Gov_blocks, Gov_modes,SVAR=seg.gov,signif=0.05,
+                         deep=2,size=0.2,n.node=20)
+#tree nodes
+nodes.models=pls.treemodel(gov.pathmox)
+nodes.models
+#summary
+summarize.mox(gov.pathmox)
