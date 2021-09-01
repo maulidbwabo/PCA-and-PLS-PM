@@ -506,14 +506,27 @@ Gov_blocks =list(1:9, 10:17, 27:34, 35:41)
 Gov_modes =rep("A",4)
 #re-ordering the segmentation into true scale
 seg.gov= Governanace[,42:44]
+View(seg.gov)
+#Ordering
 seg.gov$Experience = factor(seg.gov$Experience, ordered=TRUE)
 seg.gov$Age=factor(seg.gov$Age,ordered = TRUE)
+seg.gov$Age=factor(seg.gov$Age,bin.levels(seg.gov$Age,spl = 2))
+seg.gov$Gender=factor(seg.gov$Gender,bin.levels(seg.gov$Gender,spl = 2))
 seg.gov$Gender=factor(seg.gov$Gender,ordered = TRUE)
 # Pathmox Analysis
 gov.pathmox=pls.pathmox(data.gov, Gov_path, Gov_blocks, Gov_modes,SVAR=seg.gov,signif=0.05,
                          deep=2,size=0.2,n.node=20)
+gov.pathmox$terminal
+gov.pathmox$nodes
+gov.pathmox$candidates
+gov.pathmox$model
+gov.pathmox$Fc.r
+gov.pathmox$hybrid
 #tree nodes
 nodes.models=pls.treemodel(gov.pathmox)
 nodes.models
+nodes.models$path_sgnificance
+nodes.models$predictive_power_R2
+nodes.models$total_effects
 #summary
 summarize.mox(gov.pathmox)
