@@ -484,6 +484,7 @@ Govpls_boot =plspm.groups(Govpls, Governance1$Experience, method ="bootstrap")
 if(!require(devtools)) install.packages("devtools")
 devtools::install_github("cardiomoon/processR")
 #Segmentation tree in PLS-PM
+library(genpathmox)
 #example 2
 Governanace =read.table("C:/Users/bwabo/OneDrive/Desktop/Paper 4/Governanace.csv",header = T,sep = ",", stringsAsFactors = FALSE )
 View(Governanace)
@@ -524,9 +525,12 @@ gov.pathmox$Fc.r
 gov.pathmox$hybrid
 #tree nodes
 nodes.models=pls.treemodel(gov.pathmox)
-nodes.models
+nodes.models$loadings
 nodes.models$path_sgnificance
 nodes.models$predictive_power_R2
 nodes.models$total_effects
 #summary
 summarize.mox(gov.pathmox)
+citation("genpathmox")
+citation("cluster")
+citation("plspm")
