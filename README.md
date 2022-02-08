@@ -11,5 +11,5 @@ That said, this project is a series of steps that include exploratory data analy
 5. The fifth phase, the project compared the two groups using the permutations and bootstrap tests. It is a robust method for groups validations
 6. To check the validity and to what extent  it was critical to distill the multi-group analysis above, the project executed the novel segmentation tree technique (Pathmox-PLS)
 7. The Pathmox-PLS is similar to CART. Leo Breiman invented the later methods in regressions and former orchestrated by Sanchez. Afterward, Lamberti extended it;
-the intuition here is to verify the segmented variable are significant but not to make a prediction.
+   at this stage the objective is not to make a prediction but verifications.
 
